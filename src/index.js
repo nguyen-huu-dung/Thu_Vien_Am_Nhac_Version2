@@ -26,6 +26,7 @@ import './Components/Admin/AddAdminForm.js';
 import './Components/Admin/MusicAdmin.js';
 import './Components/Admin/UploadAdmin.js';
 import './Components/Admin/RequestAdmin.js';
+import './Components/Admin/SuggestionAdmin.js';
 import './Components/Admin/UserAdmin.js';
 
 // Screen

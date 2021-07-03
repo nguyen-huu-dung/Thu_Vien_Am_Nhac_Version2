@@ -48,7 +48,7 @@ class AddAdminForm extends HTMLElement {
                 <div>
                     <button class="form-clear button">Clear</button>
                     <button class="form-add button">Add</button>
-                    <button class="form-update button">Update</button>
+                    <button class="form-update button" style="display: none;">Update</button>
                 </div>
             </div>
         </div>`;

@@ -32,9 +32,9 @@ class SuggestionForm extends HTMLElement {
                             <input type="text" id="email" placeholder="Email..." autocomplete="off"><br><br>
                         </div>
                         <label>Chủ đề<span style="color: red;">*</span></label>
-                        <input type="text" id="subject" placeholder="Name music..." autocomplete="off"><br><br>
+                        <input type="text" id="subject" placeholder="Subject..." autocomplete="off"><br><br>
                         <label>Nội dung<span style="color: red;">*</span></label><br>
-                        <textarea id="content" placeholder="Lyrics of musis..." autocomplete="off"></textarea><br><br>
+                        <textarea id="content" placeholder="Content..." autocomplete="off"></textarea><br><br>
                     </form>
                     <div class="form-process">
                         <div class="form-result"></div>
@@ -51,7 +51,7 @@ class SuggestionForm extends HTMLElement {
 
         // Process suggestion music
 
-        this.shadow.querySelector('.form-access').addEventListener('click', async () => {
+        this.shadow.querySelector('.form-access').addEventListener('click', () => {
             const subject = this.shadow.getElementById('subject').value;
             const content = this.shadow.getElementById('content').value;
             const result = this.shadow.querySelector('.form-result');
@@ -72,7 +72,7 @@ class SuggestionForm extends HTMLElement {
                     }, 1000);
                 }
                 else {
-                    await firebase.firestore().collection('suggestions').add({email, subject, content}).then(() => {
+                    firebase.firestore().collection('suggestions').add({email, subject, content}).then(() => {
                         result.style.color = 'green';
                         result.textContent = 'Hệ thống đã ghi nhận yêu cầu của bạn';
                         setTimeout(() => {
@@ -91,7 +91,7 @@ class SuggestionForm extends HTMLElement {
                     }, 1000);
                 }
                 else {
-                    await firebase.firestore().collection('suggestions').add({email, subject, content}).then(() => {
+                    firebase.firestore().collection('suggestions').add({email, subject, content}).then(() => {
                         result.style.color = 'green';
                         result.textContent = 'Cảm ơn bạn đã phản hồi cho chúng tôi';
                         setTimeout(() => {

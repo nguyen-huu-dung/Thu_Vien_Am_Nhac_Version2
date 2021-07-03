@@ -140,7 +140,7 @@ class BarPage extends HTMLElement {
             this.shadow.querySelector('.bar-icon-user .bar-menu').style.display = 'none';
             this.shadow.querySelector('.far').style.display = 'block';
             document.querySelector('main-screen').shadow.querySelector('menu-page').shadow.querySelector('.menu-sign-in').style.visibility = 'visible';
-            location.reload();
+            router.navigate('/');
         })
 
         // Process search 

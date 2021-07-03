@@ -47,6 +47,7 @@ class RequestForm extends HTMLElement {
         </div>`;
         this.shadow.innerHTML = template;
 
+        // Close Form
         this.shadow.querySelector('.form-icon-close').addEventListener('click', () => {
             document.querySelector('main-screen').shadow.querySelector('request-form').style.display = 'none';
         })
@@ -75,7 +76,7 @@ class RequestForm extends HTMLElement {
                     }, 1000);
                 }
                 else {
-                    await firebase.firestore().collection('requests').add({email, name, singer, author}).then(() => {
+                    firebase.firestore().collection('requests').add({email, name, singer, author}).then(() => {
                         result.style.color = 'green';
                         result.textContent = 'Hệ thống đã ghi nhận yêu cầu của bạn';
                         setTimeout(() => {
@@ -94,7 +95,7 @@ class RequestForm extends HTMLElement {
                     }, 1000);
                 }
                 else {
-                    await firebase.firestore().collection('requests').add({email, name, singer, author}).then(() => {
+                    firebase.firestore().collection('requests').add({email, name, singer, author}).then(() => {
                         result.style.color = 'green';
                         result.textContent = 'Hệ thống đã ghi nhận yêu cầu của bạn';
                         setTimeout(() => {

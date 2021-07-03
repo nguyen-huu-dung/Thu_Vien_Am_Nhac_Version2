@@ -48,12 +48,13 @@ class UploadForm extends HTMLElement {
         </div>`;
         this.shadow.innerHTML = template;
         
+        // Close form
         this.shadow.querySelector('.form-icon-close').addEventListener('click', () => {
             document.querySelector('main-screen').shadow.querySelector('upload-form').style.display = 'none';
         })
 
         // Process upload music
-        this.shadow.querySelector('.form-access').addEventListener('click', async () => {
+        this.shadow.querySelector('.form-access').addEventListener('click', () => {
             const name = this.shadow.getElementById('name').value;
             const singer = this.shadow.getElementById('singer').value;
             const author = this.shadow.getElementById('author').value;
@@ -70,7 +71,7 @@ class UploadForm extends HTMLElement {
             }
             else {
                 const email = localStorage.getItem('emailLoggin');
-                await firebase.firestore().collection('uploads').add({email, name, singer, author, genre, iframeUrl, lyrics}).then(() => {
+                firebase.firestore().collection('uploads').add({email, name, singer, author, genre, iframeUrl, lyrics}).then(() => {
                     result.style.color = 'green';
                     result.textContent = 'Cảm ơn bạn đã đóng góp cho thư viện âm nhạc';
                     setTimeout(() => {

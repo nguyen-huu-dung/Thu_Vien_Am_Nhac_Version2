@@ -56,7 +56,7 @@ window.router.on('/mainAdminScreen/Requests', () => {
 
 // view suggestions admin
 window.router.on('/mainAdminScreen/Suggestions', () => {
-    document.querySelector('main-admin-screen').shadow.getElementById('app-admin-content').innerHTML = `<suggetion-admin></suggetion-admin>`;
+    document.querySelector('main-admin-screen').shadow.getElementById('app-admin-content').innerHTML = `<suggestion-admin></suggestion-admin>`;
 })
 
 // view users admin
