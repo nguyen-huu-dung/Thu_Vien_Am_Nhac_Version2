@@ -33,7 +33,7 @@ class MenuAdmin extends HTMLElement {
         </div>`;
         this.shadow.innerHTML = template;
 
-        // Active choose
+        // Active choose - đổi màu khi click vào
 
         const listDiv = this.shadow.querySelectorAll('.menu-admin-text');
         for(let i=0; i<listDiv.length; ++i) {

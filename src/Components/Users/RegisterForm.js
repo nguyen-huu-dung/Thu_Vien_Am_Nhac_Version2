@@ -45,10 +45,12 @@ class RegisterForm extends HTMLElement {
         </div>`;
         this.shadow.innerHTML = template;
 
+        // Close form
         this.shadow.querySelector('.form-icon-close').addEventListener('click', () => {
             document.querySelector('main-screen').shadow.querySelector('register-form').style.display = 'none';
         })
 
+        // Change page login
         this.shadow.querySelector('.form-change span').addEventListener('click', () => {
             document.querySelector('main-screen').shadow.querySelector('register-form').style.display = 'none';
             document.querySelector('main-screen').shadow.querySelector('loggin-form').style.display = 'block';
@@ -107,7 +109,7 @@ class RegisterForm extends HTMLElement {
                 }
                 else {
                     const password = sha1(pass);
-                    const role = 'user'
+                    const role = 'user';
                     await firebase.firestore().collection("users").add({email, username, password, role});
                     result.style.color = "green";
                     result.textContent = "Đăng ký thành công";

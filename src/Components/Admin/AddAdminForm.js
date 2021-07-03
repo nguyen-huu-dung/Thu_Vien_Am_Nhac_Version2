@@ -62,7 +62,7 @@ class AddAdminForm extends HTMLElement {
 
         // Process add
 
-        this.shadow.querySelector('.form-add').addEventListener('click', async () => {
+        this.shadow.querySelector('.form-add').addEventListener('click', () => {
             const name = this.shadow.getElementById('name').value;
             const singer = this.shadow.getElementById('singer').value;
             const author = this.shadow.getElementById('author').value;
@@ -78,7 +78,7 @@ class AddAdminForm extends HTMLElement {
                 }, 1000);
             }
             else {
-                await firebase.firestore().collection('musics').add({name, singer, author, genre, iframeUrl, lyrics}).then(() => {
+                firebase.firestore().collection('musics').add({name, singer, author, genre, iframeUrl, lyrics}).then(() => {
                     result.style.color = 'green';
                     result.textContent = 'Thêm thành công';
                     setTimeout(() => {
