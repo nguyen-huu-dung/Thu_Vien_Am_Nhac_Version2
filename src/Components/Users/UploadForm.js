@@ -27,17 +27,21 @@ class UploadForm extends HTMLElement {
                     <div class="form-note">Những trường có dấu (<span style="color: red;">*</span>) bắt buộc điền</div>
                     <form>
                         <label>Tên bài hát<span style="color: red;">*</span></label>
-                        <input type="text" id="name" placeholder="Name music..." autocomplete="off"><br><br>
+                        <input type="text" id="name" placeholder="Tình Yêu Hoa Gió" autocomplete="off"><br><br>
                         <label>Ca sĩ<span style="color: red;">*</span></label>
-                        <input type="text" id="singer" placeholder="Singer..." autocomplete="off"><br><br>
+                        <input type="text" id="singer" placeholder="Trương Thế Vinh" autocomplete="off"><br><br>
                         <label>Tác giả<span style="color: red;">*</span></label>
-                        <input type="text" id="author" placeholder="Author..." autocomplete="off"><br><br>
+                        <input type="text" id="author" placeholder="Nguyễn Hồng Thuận" autocomplete="off"><br><br>
                         <label>Thể loại</label>
-                        <input type="text" id="genre" placeholder="Genre..." autocomplete="off"><br><br>
+                        <input type="text" id="genre" placeholder="Nhạc Trẻ" autocomplete="off"><br><br>
                         <label>Link bài hát<span style="color: red;">*</span></label>
-                        <input type="text" id="link" placeholder="Link music..." autocomplete="off"><br><br>
+                        <input type="text" id="link" placeholder="https://www.nhaccuatui.com/mh/auto/rCCf6Xnr3fLn" autocomplete="off"><br><br>
                         <label>Lời bài hát</label><br>
-                        <textarea id="lyrics" placeholder="Lyrics of musis..." autocomplete="off"></textarea><br><br>
+                        <textarea id="lyrics" placeholder="\
+Ngồi bên hiên
+Ngắm lá rơi
+Nhìn nụ hoa đã phai sắc màu
+Rơi trước nhà..." autocomplete="off"></textarea><br><br>
                     </form>
                     <div class="form-process">
                         <div class="form-result"></div>
@@ -71,7 +75,7 @@ class UploadForm extends HTMLElement {
             }
             else {
                 const email = localStorage.getItem('emailLoggin');
-                firebase.firestore().collection('uploads').add({email, name, singer, author, genre, iframeUrl, lyrics}).then(() => {
+                firebase.firestore().collection('uploads').add({email, name, singer, author, genre, iframeUrl, lyrics, type: "Đăng bài hát"}).then(() => {
                     result.style.color = 'green';
                     result.textContent = 'Cảm ơn bạn đã đóng góp cho thư viện âm nhạc';
                     setTimeout(() => {

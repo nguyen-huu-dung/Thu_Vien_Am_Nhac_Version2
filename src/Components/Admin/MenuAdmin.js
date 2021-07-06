@@ -23,8 +23,7 @@ class MenuAdmin extends HTMLElement {
             <div class="menu-choose">
                 <div>
                     <div class="menu-admin-text admin-musics">Thư viện âm nhạc</div>
-                    <div class="menu-admin-text admin-uploads">Đăng bài hát</div>
-                    <div class="menu-admin-text admin-requests">Yêu cầu bài hát</div>
+                    <div class="menu-admin-text admin-uploads">Xử lý yêu cầu</div>
                     <div class="menu-admin-text admin-suggestions">Phản hồi</div>
                     <div class="menu-admin-text admin-users">Tài khoản người dùng</div>
                     <div class="menu-admin-text admin-logout">Đăng xuất</div>
@@ -56,10 +55,6 @@ class MenuAdmin extends HTMLElement {
             router.navigate('/mainAdminScreen/Uploads');
         })
 
-        this.shadow.querySelector('.admin-requests').addEventListener('click', () => {
-            router.navigate('/mainAdminScreen/Requests');
-        })
-
         this.shadow.querySelector('.admin-suggestions').addEventListener('click', () => {
             router.navigate('/mainAdminScreen/Suggestions');
         })
@@ -70,6 +65,7 @@ class MenuAdmin extends HTMLElement {
 
         this.shadow.querySelector('.admin-logout').addEventListener('click', () => {
             router.navigate('/');
+            localStorage.setItem('mainScreen', 'user')
         })
     }
 }

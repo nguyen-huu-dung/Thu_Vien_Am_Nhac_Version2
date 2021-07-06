@@ -104,10 +104,12 @@ class LogginForm extends HTMLElement {
                                 document.querySelector('main-screen').shadow.querySelector('bar-page').shadow.querySelector('.fa-user-circle').style.display = 'block';
                                 document.querySelector('main-screen').shadow.querySelector('bar-page').shadow.querySelector('.far').style.display = 'none';
                                 document.querySelector('main-screen').shadow.querySelector('loggin-form').style.display = 'none';
+                                location.reload();
                             }, 500);
                         }
                         else {
-                            router.navigate('/mainAdminScreen')
+                            router.navigate('/mainAdminScreen');
+                            localStorage.setItem('mainScreen', 'mainAdminScreen');
                         }
                     }
                     else if (!responseAccount.empty) {
@@ -123,10 +125,12 @@ class LogginForm extends HTMLElement {
                                 document.querySelector('main-screen').shadow.querySelector('bar-page').shadow.querySelector('.fa-user-circle').style.display = 'block';
                                 document.querySelector('main-screen').shadow.querySelector('bar-page').shadow.querySelector('.far').style.display = 'none';
                                 document.querySelector('main-screen').shadow.querySelector('loggin-form').style.display = 'none';
+                                location.reload();
                             }, 500);
                         }
                         else {
                             router.navigate('/mainAdminScreen');
+                            localStorage.setItem('mainScreen', 'mainAdminScreen');
                         }
                     }
                 }

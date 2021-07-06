@@ -23,7 +23,7 @@ class BarPage extends HTMLElement {
         <div id="bar-page" class="d-flex pt-2">
             <div class="bar-search input-group mb-3">
                 <span class="input-group-text icon-search-page"><i class="fas fa-search"></i></span>
-                <input type="search" id="search-page" placeholder="Tìm bài hát..." aria-label="Username" aria-describedby="basic-addon1">
+                <input type="search" id="search-page" placeholder="Tìm bài hát hoặc tên ca sĩ" aria-label="Username" aria-describedby="basic-addon1">
                 <div class="result-search-page">
                 </div>
             </div>
@@ -141,6 +141,7 @@ class BarPage extends HTMLElement {
             this.shadow.querySelector('.far').style.display = 'block';
             document.querySelector('main-screen').shadow.querySelector('menu-page').shadow.querySelector('.menu-sign-in').style.visibility = 'visible';
             router.navigate('/');
+            location.reload();
         })
 
         // Process search 

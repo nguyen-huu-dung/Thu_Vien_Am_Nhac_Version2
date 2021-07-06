@@ -1,7 +1,7 @@
 // Tiêu đề chứa menu
 
 import { style } from "../../CSS/style.js";
-import { checkLoggin } from "../../utils.js";
+import { checkLoggin, loadWeb } from "../../utils.js";
 
 class MenuPage extends HTMLElement {
     constructor() {
@@ -70,13 +70,13 @@ class MenuPage extends HTMLElement {
         this.shadow.innerHTML = template;
 
         // Onload Web
-        if(checkLoggin()) {
+        if (checkLoggin()) {
             this.shadow.querySelector('.menu-sign-in').style.visibility = 'visible';
         }
         else {
             this.shadow.querySelector('.menu-sign-in').style.visibility = 'hidden';
         }
-        
+
         this.shadow.getElementById('register').addEventListener('click', () => {
             document.querySelector('main-screen').shadow.querySelector('register-form').style.display = 'block';
         })
@@ -90,10 +90,20 @@ class MenuPage extends HTMLElement {
         // Proocess home
 
         this.shadow.querySelector('.menu-home').addEventListener('click', () => {
+            const $app = document.getElementById("app");
+            $app.innerHTML = `<preloading-page></preloading-page>`;
+            setTimeout(() => {
+                $app.insertAdjacentHTML('beforeend', `<main-screen></main-screen>`);
+            }, 10)
             router.navigate('/');
         })
 
         this.shadow.querySelector('#menu-logo').addEventListener('click', () => {
+            const $app = document.getElementById("app");
+            $app.innerHTML = `<preloading-page></preloading-page>`;
+            setTimeout(() => {
+                $app.insertAdjacentHTML('beforeend', `<main-screen></main-screen>`);
+            }, 10)
             router.navigate('/');
         })
     }

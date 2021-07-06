@@ -58,7 +58,7 @@ class ListGenre extends HTMLElement {
                 const max = listMusicGenre[nameList[i].id].length;
                 const listMix = mixArray(listMusicGenre[nameList[i].id]);
                 for(let index = 1; index < 5; ++index) {
-                    const data = listMix[index];
+                    const data = listMix[index-1];
                     domList[i].insertAdjacentHTML('beforeend', `<card-music-two id="${data.id}" name="${data.name}" singer="${data.singer}"></card-music-two>`);
                     if(index == max) break;
                 }

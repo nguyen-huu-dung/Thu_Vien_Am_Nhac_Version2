@@ -29,12 +29,12 @@ class SuggestionForm extends HTMLElement {
                     <form>
                         <div class="form-other">
                             <label>Email<span style="color: red;">*</span></label>
-                            <input type="text" id="email" placeholder="Email..." autocomplete="off"><br><br>
+                            <input type="text" id="email" placeholder="tvam@gmail.com" autocomplete="off"><br><br>
                         </div>
                         <label>Chủ đề<span style="color: red;">*</span></label>
-                        <input type="text" id="subject" placeholder="Subject..." autocomplete="off"><br><br>
+                        <input type="text" id="subject" placeholder="Bài hát, thiết kế, hỗ trợ người dùng,..." autocomplete="off"><br><br>
                         <label>Nội dung<span style="color: red;">*</span></label><br>
-                        <textarea id="content" placeholder="Content..." autocomplete="off"></textarea><br><br>
+                        <textarea id="content" placeholder="...." autocomplete="off"></textarea><br><br>
                     </form>
                     <div class="form-process">
                         <div class="form-result"></div>

@@ -30,7 +30,8 @@ class CardOne extends HTMLElement {
                 <div class="music-one-seen"><i class="fas fa-headphones"></i></div>
                 <div class="music-one-icon">
                     <i class="fas fa-play"></i>
-                    <i class="far fa-heart"></i>
+                    <i class="far fa-heart heart-1"></i>
+                    <i class="fas fa-heart heart-2"></i>
                 </div>
             </div>
         </div><hr>`;
@@ -49,25 +50,37 @@ class CardOne extends HTMLElement {
             router.navigate(`/mainScreen/songPage/${this.id}/0`);
         })
 
+        // check heart
+        if(this.checkHeart == "1") {
+            this.shadow.querySelector('.heart-1').style.display = 'none';
+            this.shadow.querySelector('.heart-2').style.display = 'block';
+        }
+        else {
+            this.shadow.querySelector('.heart-1').style.display = 'block';
+            this.shadow.querySelector('.heart-2').style.display = 'none';
+        }
+
         // Heart
-        this.shadow.querySelector('.fa-heart').addEventListener('click', () => {
+        this.shadow.querySelector('.heart-1').addEventListener('click', () => {
             if(checkLoggin()) {
                 document.querySelector('main-screen').shadow.querySelector('loggin-form').style.display = 'block';
             }
             else {
                 const confirm = document.querySelector('main-screen').shadow.querySelector('confirm-love');
                 confirm.style.display = "block";
-                if(this.listYT.includes(localStorage.getItem('logginState'))) {
-                    confirm.shadow.querySelector(".confirm-name").textContent = 'Bài hát đã có trong danh sách yêu thích';
-                    confirm.shadow.querySelector(".confirm-button").style.display = 'none';
-                }
-                else {
-                    confirm.shadow.querySelector(".confirm-name").textContent = `Thêm bài hát ${this.name} vào danh sách yêu thích của bạn`;
-                    confirm.shadow.querySelector(".confirm-button").style.display = 'block';
-                }
+                confirm.shadow.querySelector(".confirm-name").textContent = `Thêm bài hát ${this.name} vào danh sách yêu thích của bạn`;
+                confirm.shadow.querySelector(".confirm-button").style.display = 'block';
                 localStorage.setItem('musicID', this.id);
                 localStorage.setItem('listYT', this.listYT);
             }
+        })
+
+
+        this.shadow.querySelector('.heart-2').addEventListener('click', () => {
+            const confirm = document.querySelector('main-screen').shadow.querySelector('confirm-love');
+            confirm.style.display = "block";
+            confirm.shadow.querySelector(".confirm-name").textContent = 'Bài hát đã có trong danh sách yêu thích';
+            confirm.shadow.querySelector(".confirm-button").style.display = 'none';
         })
 
     }
@@ -90,6 +103,10 @@ class CardOne extends HTMLElement {
 
     get listYT() {
         return this.getAttribute('listYT');
+    }
+
+    get checkHeart() {
+        return this.getAttribute('checkHeart');
     }
 }
 

@@ -27,13 +27,18 @@ class RegisterForm extends HTMLElement {
                     <div class="form-note">Những trường có dấu (<span style="color: red;">*</span>) bắt buộc điền</div>
                     <form>
                         <label>E-mail<span style="color: red;">*</span></label>
-                        <input type="text" id="email" placeholder="Email..." autocomplete="off"><br><br>
+                        <input type="text" id="email" placeholder="thuvienamnhac@gmail.com" autocomplete="off"><br><br>
                         <label>Tên tài khoản<span style="color: red;">*</span></label>
-                        <input type="text" id="user" placeholder="Username..." autocomplete="off"><br><br>
+                        <input type="text" id="user" placeholder="amnhac123" autocomplete="off"><br><br>
                         <label>Mật khẩu<span style="color: red;">*</span></label>
-                        <input type="password" id="pass" placeholder="Password..." autocomplete="off"><br><br>
+                        <input type="password" id="pass" placeholder="Aye123456" autocomplete="off">
+                        <i class="far fa-question-circle"></i><br><br>
+                        <div class="password-sup">
+                            <p>- Mật khẩu tối thiểu 8 kí tự, bao gồm chữ và số</p>
+                            <p>- Chứa ít nhất 1 chữ hoa, 1 chữ in thường và 1 chữ số.</p>
+                        </div>
                         <label>Nhập lại mật khẩu<span style="color: red;">*</span></label>
-                        <input type="password" id="passRepeat" placeholder="Repeat password..." autocomplete="off"><br><br>
+                        <input type="password" id="passRepeat" placeholder="..." autocomplete="off"><br><br>
                     </form>
                     <div class="form-process">
                         <div class="form-result"></div>
@@ -55,6 +60,15 @@ class RegisterForm extends HTMLElement {
             document.querySelector('main-screen').shadow.querySelector('register-form').style.display = 'none';
             document.querySelector('main-screen').shadow.querySelector('loggin-form').style.display = 'block';
             document.querySelector('main-screen').shadow.querySelector('loggin-form').shadow.querySelector('form').reset();
+        })
+
+        // Password support hover 
+        this.shadow.querySelector('.fa-question-circle').addEventListener('mouseover', () => {
+            this.shadow.querySelector('.password-sup').style.display = "block";
+        })
+
+        this.shadow.querySelector('.fa-question-circle').addEventListener('mouseout', () => {
+            this.shadow.querySelector('.password-sup').style.display = "none";
         })
 
         // Process resgister

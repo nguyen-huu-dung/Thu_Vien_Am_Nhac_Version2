@@ -29,14 +29,14 @@ class RequestForm extends HTMLElement {
                     <form>
                         <div class="form-other">
                             <label>Email<span style="color: red;">*</span></label>
-                            <input type="text" id="email" placeholder="Email..." autocomplete="off"><br><br>
+                            <input type="text" id="email" placeholder="thuvienamnhac@gmail.com" autocomplete="off"><br><br>
                         </div>
                         <label>Tên bài hát<span style="color: red;">*</span></label>
-                        <input type="text" id="name" placeholder="Name music..." autocomplete="off"><br><br>
+                        <input type="text" id="name" placeholder="Yêu Cô Bạn Thân" autocomplete="off"><br><br>
                         <label>Ca sĩ<span style="color: red;">*</span></label>
-                        <input type="text" id="singer" placeholder="Singer..." autocomplete="off"><br><br>
+                        <input type="text" id="singer" placeholder="Bằng Cường" autocomplete="off"><br><br>
                         <label>Tác giả<span style="color: red;">*</span></label>
-                        <input type="text" id="author" placeholder="Author..." autocomplete="off"><br><br>
+                        <input type="text" id="author" placeholder="Bằng Cường" autocomplete="off"><br><br>
                     </form>
                     <div class="form-process">
                         <div class="form-result"></div>
@@ -76,7 +76,7 @@ class RequestForm extends HTMLElement {
                     }, 1000);
                 }
                 else {
-                    firebase.firestore().collection('requests').add({email, name, singer, author}).then(() => {
+                    firebase.firestore().collection('uploads').add({email, name, singer, author, type: "Yêu cầu bài hát"}).then(() => {
                         result.style.color = 'green';
                         result.textContent = 'Hệ thống đã ghi nhận yêu cầu của bạn';
                         setTimeout(() => {
@@ -95,7 +95,7 @@ class RequestForm extends HTMLElement {
                     }, 1000);
                 }
                 else {
-                    firebase.firestore().collection('requests').add({email, name, singer, author}).then(() => {
+                    firebase.firestore().collection('uploads').add({email, name, singer, author, type: "Yêu cầu bài hát"}).then(() => {
                         result.style.color = 'green';
                         result.textContent = 'Hệ thống đã ghi nhận yêu cầu của bạn';
                         setTimeout(() => {

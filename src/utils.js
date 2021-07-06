@@ -57,12 +57,12 @@ export function checkLoggin() {
 
 // Mix array
 export function mixArray(array) {
-   let currentIndex = array.length,  randomIndex;
+    let currentIndex = array.length, randomIndex;
 
     while (currentIndex !== 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
     }
     return array;
 }
@@ -72,3 +72,15 @@ export function mixArray(array) {
 export async function delData(collectionName, id) {
     await firebase.firestore().collection(collectionName).doc(id).delete();
 }
+
+// Load Web
+
+export const loadWeb = () => {
+    if (localStorage.getItem('mainScreen') == null || localStorage.getItem('mainScreen') == "user") {
+        document.getElementById('app').innerHTML = `<main-screen></main-screen>`;
+    }
+    else {
+        document.getElementById('app').innerHTML = `<main-admin-screen></main-admin-screen>`;
+    }
+}
+

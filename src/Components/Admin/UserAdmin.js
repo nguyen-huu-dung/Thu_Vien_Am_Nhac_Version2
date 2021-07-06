@@ -1,7 +1,7 @@
 // User admin content
 
 import { adminStyle } from "../../CSS/style.js";
-import { getData, xoa_dau, delData } from "../../utils.js";
+import { getData, xoa_dau, delData, verifyEmail, verifyPassword, sha1 } from "../../utils.js";
 
 class UserAdmin extends HTMLElement {
     constructor() {
@@ -24,6 +24,24 @@ class UserAdmin extends HTMLElement {
             <div class="admin-content">
                 <div class="admin-name">Quản lý tài khoản người dùng</div>
                 <div class="admin-list">
+                    <form id="add-user">
+                        <label for="add-user-email">Email<span style="color: red;">*</span></label>
+                        <input type="search" class="input-add-user" id="add-user-email" placeholder="username@gmail.com"
+                            aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
+                        <label for="add-user-user">Tên tài khoản<span style="color: red;">*</span></label>
+                        <input type="search" class="input-add-user" id="add-user-user" placeholder="username1"
+                            aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
+                        <label for="add-user-password">Mật khẩu<span style="color: red;">*</span></label>
+                        <input type="search" class="input-add-user" id="add-user-pass" placeholder="Abcxy123"
+                            aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
+                    </form>
+                    <div class="but-add-user">
+                        <div class="form-result"></div> 
+                        <div>
+                            <button class="form-clear button">Clear</button>
+                            <button class="form-add button">Add</button>
+                        </div>
+                    </div>
                     <form>
                         <label for="admin-music-search">Tìm kiếm</label>
                         <input type="search" id="search-user-admin" placeholder="Tìm tài khoản..."
@@ -82,69 +100,74 @@ class UserAdmin extends HTMLElement {
             let index = 1;
             let i;
             const max = listUser.length;
-            for (i = index - 1; i < index + 9; ++i) {
-                this.shadow.querySelector('table').insertAdjacentHTML('beforeend', `
-            <tr>
-                <td>${listUser[i].email}</span></td>
-                <td>${listUser[i].username}</td>
-                <td>
-                    <button class="button form-delUser button-delete">Xóa tài khoản</button>
-                </td>
-            </tr>`);
-                if (i == max - 1) {
-                    this.shadow.querySelector('.admin-next').style.visibility = 'hidden';
-                    break;
-                }
+            if(max == 0) {
+                this.shadow.querySelector('.admin-next').style.visibility = 'hidden';
             }
-            index += i;
-
-            // Process next page 
-            this.shadow.querySelector('.admin-next').addEventListener('click', () => {
-                if (index != max+1) {
+            else {
+                for (i = index - 1; i < index + 9; ++i) {
+                    this.shadow.querySelector('table').insertAdjacentHTML('beforeend', `
+                <tr>
+                    <td>${listUser[i].email}</span></td>
+                    <td>${listUser[i].username}</td>
+                    <td>
+                        <button class="button form-delUser button-delete">Xóa tài khoản</button>
+                    </td>
+                </tr>`);
+                    if (i == max - 1) {
+                        this.shadow.querySelector('.admin-next').style.visibility = 'hidden';
+                        break;
+                    }
+                }
+                index += i;
+    
+                // Process next page 
+                this.shadow.querySelector('.admin-next').addEventListener('click', () => {
+                    if (index != max+1) {
+                        const countPage = this.shadow.querySelector('.admin-count-page');
+                        countPage.textContent = Number(countPage.textContent) + 1;
+                        this.shadow.querySelector('.admin-pre').style.visibility = 'visible';
+                        removeList();
+                        for (let i = index - 1; i < index + 9; ++i) {
+                            this.shadow.querySelector('table').insertAdjacentHTML('beforeend', `
+                        <tr>
+                            <td>${listUser[i].email}</span></td>
+                            <td>${listUser[i].username}</td>
+                            <td>
+                                <button class="button form-delUser button-delete">Xóa tài khoản</button>
+                            </td>
+                        </tr>`);
+                            if (i == max - 1) {
+                                this.shadow.querySelector('.admin-next').style.visibility = 'hidden';
+                                break;
+                            }
+                        }
+                        index += i;
+                    }
+                })
+    
+                // Process pre page
+                this.shadow.querySelector('.admin-pre').addEventListener('click', () => {
+                    index -= 20;
+                    if (index == 1) {
+                        this.shadow.querySelector('.admin-pre').style.visibility = 'hidden';
+                    }
                     const countPage = this.shadow.querySelector('.admin-count-page');
-                    countPage.textContent = Number(countPage.textContent) + 1;
-                    this.shadow.querySelector('.admin-pre').style.visibility = 'visible';
+                    countPage.textContent = Number(countPage.textContent) - 1;
+                    this.shadow.querySelector('.admin-next').style.visibility = 'visible';
                     removeList();
                     for (let i = index - 1; i < index + 9; ++i) {
                         this.shadow.querySelector('table').insertAdjacentHTML('beforeend', `
-                    <tr>
-                        <td>${listUser[i].email}</span></td>
-                        <td>${listUser[i].username}</td>
-                        <td>
-                            <button class="button form-delUser button-delete">Xóa tài khoản</button>
-                        </td>
-                    </tr>`);
-                        if (i == max - 1) {
-                            this.shadow.querySelector('.admin-next').style.visibility = 'hidden';
-                            break;
-                        }
+                        <tr>
+                            <td>${listUser[i].email}</span></td>
+                            <td>${listUser[i].username}</td>
+                            <td>
+                                <button class="button form-delUser button-delete">Xóa tài khoản</button>
+                            </td>
+                        </tr>`);
                     }
                     index += i;
-                }
-            })
-
-            // Process pre page
-            this.shadow.querySelector('.admin-pre').addEventListener('click', () => {
-                index -= 20;
-                if (index == 1) {
-                    this.shadow.querySelector('.admin-pre').style.visibility = 'hidden';
-                }
-                const countPage = this.shadow.querySelector('.admin-count-page');
-                countPage.textContent = Number(countPage.textContent) - 1;
-                this.shadow.querySelector('.admin-next').style.visibility = 'visible';
-                removeList();
-                for (let i = index - 1; i < index + 9; ++i) {
-                    this.shadow.querySelector('table').insertAdjacentHTML('beforeend', `
-                    <tr>
-                        <td>${listUser[i].email}</span></td>
-                        <td>${listUser[i].username}</td>
-                        <td>
-                            <button class="button form-delUser button-delete">Xóa tài khoản</button>
-                        </td>
-                    </tr>`);
-                }
-                index += i;
-            })
+                })
+            }
         }
 
         // Remove list table
@@ -155,6 +178,49 @@ class UserAdmin extends HTMLElement {
                 listTr[i].remove();
             }
         }
+
+        // Clear form 
+        this.shadow.querySelector('.form-clear').addEventListener('click', () => {
+            this.shadow.getElementById('add-user').reset();
+        })
+
+        // Add user
+        this.shadow.querySelector('.form-add').addEventListener('click', async () => {
+            const email = this.shadow.getElementById('add-user-email').value;
+            const username = this.shadow.getElementById('add-user-user').value;
+            const pass = this.shadow.getElementById('add-user-pass').value;
+            const result = this.shadow.querySelector('.form-result');
+            result.style.color = 'red';
+            if(email == "" || username == "" || pass == "") {
+                result.textContent = 'Cần nhập đủ các trường có dấu *';
+                setTimeout(() => {
+                    result.textContent = '';
+                }, 1000);
+            }
+            else if(!verifyEmail(email)) {
+                result.textContent = 'Email không hợp lệ';
+                setTimeout(() => {
+                    result.textContent = '';
+                }, 1000);
+            }
+            else if(!verifyPassword(pass)) {
+                result.textContent = 'Mật khẩu chỉ bao gồm chữ hoặc số, tối thiểu 8 kí tự chứa ít nhất 1 chữ số, 1 chữ in thường và 1 chữ in hoa';
+                setTimeout(() => {
+                    result.textContent = '';
+                }, 1000);
+            }
+            else {
+                const password = sha1(pass);
+                const role = "user";
+                firebase.firestore().collection('users').add({email, username, password, role}).then(() => {
+                    result.style.color = 'green';
+                    result.textContent = 'Thêm thành công';
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                })
+            }
+        })
     }
 }
 

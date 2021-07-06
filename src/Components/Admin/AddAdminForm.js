@@ -82,8 +82,6 @@ class AddAdminForm extends HTMLElement {
                     result.style.color = 'green';
                     result.textContent = 'Thêm thành công';
                     setTimeout(() => {
-                        result.textContent = '';
-                        this.shadow.querySelector('form').reset();
                         location.reload();
                     }, 1000);
                 })

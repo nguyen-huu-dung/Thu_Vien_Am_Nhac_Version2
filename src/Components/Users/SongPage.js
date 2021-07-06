@@ -27,7 +27,7 @@ class SongPage extends HTMLElement {
                             <div class="song-info">
                                 <div class="song-margin">
                                     <div class="song-name"></div>
-                                    <div class="song-author">Pop</div>
+                                    <div class="song-genre"></div>
                                 </div>
                                 <div class="song-iframe">
                                     <iframe src="" width="620px" height="312px" frameborder="0" allowfullscreen
@@ -42,7 +42,6 @@ class SongPage extends HTMLElement {
                                         <div class="song-other-author"></div>
                                         <div class="song-other-lyrics">Lời bài hát: </div>
                                     </div>
-                                    <div class="song-other-right"><i class="far fa-heart"></i></div>
                                 </div><hr>
                                 <div class="song-lyrics"></div>
                             </div>
@@ -55,6 +54,7 @@ class SongPage extends HTMLElement {
         firebase.firestore().collection('musics').doc(this.id).get().then((res) => {
             const data = res.data();
             this.shadow.querySelector('.song-name').innerHTML = `${data.name} <span class="song-singer">${data.singer}</span>`;
+            this.shadow.querySelector('.song-genre').innerHTML = `${data.genre}`;
             this.shadow.querySelector('iframe').src = data.iframeUrl;
             this.shadow.querySelector('.song-other-name').textContent = `Bài hát: ${data.name}`;
             this.shadow.querySelector('.song-other-singer').textContent = `Ca sĩ: ${data.singer}`;
@@ -68,25 +68,25 @@ class SongPage extends HTMLElement {
             }
 
             // Process love
-            this.shadow.querySelector('.fa-heart').addEventListener('click', () => {
-                if (checkLoggin()) {
-                    document.querySelector('main-screen').shadow.querySelector('loggin-form').style.display = 'block';
-                }
-                else {
-                    const confirm = document.querySelector('main-screen').shadow.querySelector('confirm-love');
-                    confirm.style.display = "block";
-                    if (data.listUserYT.includes(localStorage.getItem('logginState'))) {
-                        confirm.shadow.querySelector(".confirm-name").textContent = 'Bài hát đã có trong danh sách yêu thích';
-                        confirm.shadow.querySelector(".confirm-button").style.display = 'none';
-                    }
-                    else {
-                        confirm.shadow.querySelector(".confirm-name").textContent = `Thêm bài hát ${data.name} vào danh sách yêu thích của bạn`;
-                        confirm.shadow.querySelector(".confirm-button").style.display = 'block';
-                    }
-                    localStorage.setItem('musicID', this.id);
-                    localStorage.setItem('listYT', data.listUserYT);
-                }
-            })
+            // this.shadow.querySelector('.fa-heart').addEventListener('click', () => {
+            //     if (checkLoggin()) {
+            //         document.querySelector('main-screen').shadow.querySelector('loggin-form').style.display = 'block';
+            //     }
+            //     else {
+            //         const confirm = document.querySelector('main-screen').shadow.querySelector('confirm-love');
+            //         confirm.style.display = "block";
+            //         if (data.listUserYT.includes(localStorage.getItem('logginState'))) {
+            //             confirm.shadow.querySelector(".confirm-name").textContent = 'Bài hát đã có trong danh sách yêu thích';
+            //             confirm.shadow.querySelector(".confirm-button").style.display = 'none';
+            //         }
+            //         else {
+            //             confirm.shadow.querySelector(".confirm-name").textContent = `Thêm bài hát ${data.name} vào danh sách yêu thích của bạn`;
+            //             confirm.shadow.querySelector(".confirm-button").style.display = 'block';
+            //         }
+            //         localStorage.setItem('musicID', this.id);
+            //         localStorage.setItem('listYT', data.listUserYT);
+            //     }
+            // })
         })
     }
 

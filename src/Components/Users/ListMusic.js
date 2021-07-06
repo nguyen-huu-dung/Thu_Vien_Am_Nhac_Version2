@@ -2,7 +2,7 @@
 
 import { style } from "../../CSS/style.js";
 import '../StyleCardMusic/StyleCardOne.js';
-import { getData } from "../../utils.js";
+import { checkLoggin, getData } from "../../utils.js";
 
 class ListMusic extends HTMLElement {
     constructor() {
@@ -41,8 +41,18 @@ class ListMusic extends HTMLElement {
             if (this.name == 'top') {
                 this.shadow.querySelector('.list-name').textContent = `Top bài hát hay nhất`;
                 let index = 1;
+                let checkHeart;
                 for (let x of listMusic) {
-                    listContent.insertAdjacentHTML('beforeend', `<card-music-one id="${x.id}" name="${x.name}" singer="${x.singer}" countSeen="${x.countSeen}" listYT="${x.listUserYT}"></card-music-one>`);
+                    if(!checkLoggin()) {
+                        if(x.listUserYT.includes(localStorage.getItem("logginState"))) {
+                            checkHeart = 1;
+                        }
+                        else checkHeart = 0;
+                    }
+                    else {
+                        checkHeart = 0;
+                    }
+                    listContent.insertAdjacentHTML('beforeend', `<card-music-one id="${x.id}" name="${x.name}" singer="${x.singer}" countSeen="${x.countSeen}" listYT="${x.listUserYT}" checkHeart="${checkHeart}"></card-music-one>`);
                     index++;
                     if(index == 100) break;
                 }
@@ -52,8 +62,18 @@ class ListMusic extends HTMLElement {
                 this.shadow.querySelector('.list-name').textContent = name;
                 let index = 1;
                 for (let x of listMusic) {
+                    let checkHeart;
                     if (x.genre == name) {
-                        listContent.insertAdjacentHTML('beforeend', `<card-music-one id="${x.id}" name="${x.name}" singer="${x.singer}" countSeen="${x.countSeen}" listYT="${x.listUserYT}"></card-music-one>`);
+                        if(!checkLoggin()) {
+                            if(x.listUserYT.includes(localStorage.getItem("logginState"))) {
+                                checkHeart = 1;
+                            }
+                            else che
+                        }
+                        else {
+                            checkHeart = 0;
+                        }
+                        listContent.insertAdjacentHTML('beforeend', `<card-music-one id="${x.id}" name="${x.name}" singer="${x.singer}" countSeen="${x.countSeen}" listYT="${x.listUserYT}" checkHeart="${checkHeart}"></card-music-one>`);
                         index++;
                         if(index == 100) break;
                     }

@@ -80,69 +80,74 @@ class MusicAdmin extends HTMLElement {
             let index = 1;
             let i;
             const max = listMusic.length;
-            for (i = index - 1; i < index + 9; ++i) {
-                this.shadow.querySelector('table').insertAdjacentHTML('beforeend', `
-            <tr>
-                <td>${listMusic[i].name} - <span>${listMusic[i].singer}</span></td>
-                <td>
-                    <button class="button form-update">Update</button>
-                    <button class="button form-delete" onlick="">Delete</button>
-                </td>
-            </tr>`);
-                if (i == max - 1) {
-                    this.shadow.querySelector('.admin-next').style.visibility = 'hidden';
-                    break;
-                }
+            if(max == 0) {
+                this.shadow.querySelector('.admin-next').style.visibility = 'hidden';
             }
-            index += i;
-
-            // Process next page 
-            this.shadow.querySelector('.admin-next').addEventListener('click', () => {
-                if (index != max+1) {
+            else {
+                for (i = index - 1; i < index + 9; ++i) {
+                    this.shadow.querySelector('table').insertAdjacentHTML('beforeend', `
+                <tr>
+                    <td>${listMusic[i].name} - <span>${listMusic[i].singer}</span></td>
+                    <td>
+                        <button class="button form-update">Update</button>
+                        <button class="button form-delete">Delete</button>
+                    </td>
+                </tr>`);
+                    if (i == max - 1) {
+                        this.shadow.querySelector('.admin-next').style.visibility = 'hidden';
+                        break;
+                    }
+                }
+                index += i;
+    
+                // Process next page 
+                this.shadow.querySelector('.admin-next').addEventListener('click', () => {
+                    if (index != max+1) {
+                        const countPage = this.shadow.querySelector('.admin-count-page');
+                        countPage.textContent = Number(countPage.textContent) + 1;
+                        this.shadow.querySelector('.admin-pre').style.visibility = 'visible';
+                        removeList();
+                        for (let i = index - 1; i < index + 9; ++i) {
+                            this.shadow.querySelector('table').insertAdjacentHTML('beforeend', `
+                        <tr>
+                            <td>${listMusic[i].name} - <span>${listMusic[i].singer}</span></td>
+                            <td>
+                                <button class="button form-update">Update</button>
+                                <button class="button form-delete">Delete</button>
+                            </td>
+                        </tr>`);
+                            if (i == max - 1) {
+                                this.shadow.querySelector('.admin-next').style.visibility = 'hidden';
+                                break;
+                            }
+                        }
+                        index += i;
+                    }
+                })
+    
+                // Process pre page
+                this.shadow.querySelector('.admin-pre').addEventListener('click', () => {
+                    index -= 20;
+                    if (index == 1) {
+                        this.shadow.querySelector('.admin-pre').style.visibility = 'hidden';
+                    }
                     const countPage = this.shadow.querySelector('.admin-count-page');
-                    countPage.textContent = Number(countPage.textContent) + 1;
-                    this.shadow.querySelector('.admin-pre').style.visibility = 'visible';
+                    countPage.textContent = Number(countPage.textContent) - 1;
+                    this.shadow.querySelector('.admin-next').style.visibility = 'visible';
                     removeList();
                     for (let i = index - 1; i < index + 9; ++i) {
                         this.shadow.querySelector('table').insertAdjacentHTML('beforeend', `
-                    <tr>
-                        <td>${listMusic[i].name} - <span>${listMusic[i].singer}</span></td>
-                        <td>
-                            <button class="button form-update">Update</button>
-                            <button class="button form-delete">Delete</button>
-                        </td>
-                    </tr>`);
-                        if (i == max - 1) {
-                            this.shadow.querySelector('.admin-next').style.visibility = 'hidden';
-                            break;
-                        }
+                        <tr>
+                            <td>${listMusic[i].name} - <span>${listMusic[i].singer}</span></td>
+                            <td>
+                                <button class="button form-update">Update</button>
+                                <button class="button form-delete">Delete</button>
+                            </td>
+                        </tr>`);
                     }
                     index += i;
-                }
-            })
-
-            // Process pre page
-            this.shadow.querySelector('.admin-pre').addEventListener('click', () => {
-                index -= 20;
-                if (index == 1) {
-                    this.shadow.querySelector('.admin-pre').style.visibility = 'hidden';
-                }
-                const countPage = this.shadow.querySelector('.admin-count-page');
-                countPage.textContent = Number(countPage.textContent) - 1;
-                this.shadow.querySelector('.admin-next').style.visibility = 'visible';
-                removeList();
-                for (let i = index - 1; i < index + 9; ++i) {
-                    this.shadow.querySelector('table').insertAdjacentHTML('beforeend', `
-                    <tr>
-                        <td>${listMusic[i].name} - <span>${listMusic[i].singer}</span></td>
-                        <td>
-                            <button class="button form-update">Update</button>
-                            <button class="button form-delete">Delete</button>
-                        </td>
-                    </tr>`);
-                }
-                index += i;
-            })
+                })
+            }
         }
 
         // Remove list table
