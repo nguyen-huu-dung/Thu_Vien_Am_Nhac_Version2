@@ -65,12 +65,12 @@ class UserAdmin extends HTMLElement {
         this.shadow.innerHTML = template;
 
         // Sreen
-        this.shadow.querySelector('.admin-content').style.minHeight = `${screen.height-100}px`;
+        this.shadow.querySelector('.admin-content').style.minHeight = `${screen.height - 100}px`;
 
         getData('users').then((res) => {
             const listUser = [];
             res.forEach((data) => {
-                if(data.role == "user") listUser.push(data);
+                if (data.role == "user") listUser.push(data);
             })
             printList(listUser);
 
@@ -78,7 +78,7 @@ class UserAdmin extends HTMLElement {
             this.shadow.getElementById('search-user-admin').addEventListener('input', () => {
                 const keyWord = this.shadow.getElementById('search-user-admin').value;
                 const listSearch = [];
-                for(let x of listUser) {
+                for (let x of listUser) {
                     if (xoa_dau(x.email).toLowerCase().search(keyWord.toLowerCase()) != -1 || xoa_dau(x.username).toLowerCase().search(keyWord.toLowerCase()) != -1) {
                         listSearch.push(x);
                     }
@@ -100,7 +100,7 @@ class UserAdmin extends HTMLElement {
             let index = 1;
             let i;
             const max = listUser.length;
-            if(max == 0) {
+            if (max == 0) {
                 this.shadow.querySelector('.admin-next').style.visibility = 'hidden';
             }
             else {
@@ -119,10 +119,10 @@ class UserAdmin extends HTMLElement {
                     }
                 }
                 index += i;
-    
+
                 // Process next page 
                 this.shadow.querySelector('.admin-next').addEventListener('click', () => {
-                    if (index != max+1) {
+                    if (index != max + 1) {
                         const countPage = this.shadow.querySelector('.admin-count-page');
                         countPage.textContent = Number(countPage.textContent) + 1;
                         this.shadow.querySelector('.admin-pre').style.visibility = 'visible';
@@ -144,7 +144,7 @@ class UserAdmin extends HTMLElement {
                         index += i;
                     }
                 })
-    
+
                 // Process pre page
                 this.shadow.querySelector('.admin-pre').addEventListener('click', () => {
                     index -= 20;
@@ -191,34 +191,50 @@ class UserAdmin extends HTMLElement {
             const pass = this.shadow.getElementById('add-user-pass').value;
             const result = this.shadow.querySelector('.form-result');
             result.style.color = 'red';
-            if(email == "" || username == "" || pass == "") {
+            if (email == "" || username == "" || pass == "") {
                 result.textContent = 'Cần nhập đủ các trường có dấu *';
                 setTimeout(() => {
                     result.textContent = '';
                 }, 1000);
             }
-            else if(!verifyEmail(email)) {
+            else if (!verifyEmail(email)) {
                 result.textContent = 'Email không hợp lệ';
                 setTimeout(() => {
                     result.textContent = '';
                 }, 1000);
             }
-            else if(!verifyPassword(pass)) {
+            else if (!verifyPassword(pass)) {
                 result.textContent = 'Mật khẩu chỉ bao gồm chữ hoặc số, tối thiểu 8 kí tự chứa ít nhất 1 chữ số, 1 chữ in thường và 1 chữ in hoa';
                 setTimeout(() => {
                     result.textContent = '';
                 }, 1000);
             }
             else {
-                const password = sha1(pass);
-                const role = "user";
-                firebase.firestore().collection('users').add({email, username, password, role}).then(() => {
-                    result.style.color = 'green';
-                    result.textContent = 'Thêm thành công';
+                const responseEmail = await firebase.firestore().collection("users").where("email", "==", email).get();
+                const responseAccount = await firebase.firestore().collection("users").where("username", "==", username).get();
+                if (!responseEmail.empty) {
+                    result.textContent = "Email đã tồn tại!";
                     setTimeout(() => {
-                        location.reload();
+                        result.textContent = '';
                     }, 1000);
-                })
+                }
+                else if (!responseAccount.empty) {
+                    result.textContent = "Tài khoản đã tồn tại!";
+                    setTimeout(() => {
+                        result.textContent = '';
+                    }, 1000);
+                }
+                else {
+                    const password = sha1(pass);
+                    const role = "user";
+                    firebase.firestore().collection('users').add({ email, username, password, role }).then(() => {
+                        result.style.color = 'green';
+                        result.textContent = 'Thêm thành công';
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    })
+                }
             }
         })
     }
