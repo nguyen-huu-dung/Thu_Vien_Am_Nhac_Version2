@@ -1,14 +1,5 @@
-* Nhóm thành viên : 
-
-    Nguyễn Hữu Dũng ( Nhóm trưởng)
-
-    Dương Thành Đạt
-
-    Nguyễn Minh Long
-
 * Ý tưởng:
-
-   -  Phát triển project khóa 1, áp dụng các công nghệ: 
+   -  Phát triển từ version 1, áp dụng các công nghệ: 
          + Database: firebase
          + Object, custom-elements
          + CryptoJS, verify ( Email, password),...
